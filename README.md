@@ -1,0 +1,1 @@
+Comparison between GWS computation via convex combination and Minkowski sum by means of random grasps as well as the YBekiroglu_20150717 dataset. This code relies on some function from the 'grasp_success' repository: git@gitsvn-nt.oru.se:rtkg/grasp_success.git
