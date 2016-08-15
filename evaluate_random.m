@@ -81,7 +81,7 @@ for i=1:nO
 		options.GWS='union';
 		[q_u tq_u]=graspQuality(GW,T,options);
 		[fc_u, GWS_u]=graspWrenchSpace(GW,options);
-		
+				
 		random_results(i).G{end+1}=G;
 		random_results(i).T{end+1}=T;
 		random_results(i).GW{end+1}=GW;
@@ -96,6 +96,6 @@ for i=1:nO
 		grasp_count=grasp_count+1;
 		disp(['Evaluated object ', num2str(i), ' of ',num2str(nO), '; grasp ', num2str(grasp_count), ' of ', num2str(nG), '.']);
 	end
+	save('./results/random_results.mat','random_results');
 end
 
-save('./results/random_results.mat','random_results');
