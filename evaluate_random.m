@@ -7,21 +7,24 @@ options.disc=12; %friction cone discretization
 options.torque_scale=1;
 options.augment_WC='none'; %options: 'none','fl','hf', 'sf' -> additional patch wrenches
 
+nF=3;
 nO=length(YBekiroglu_20150717);
-nG=500; %number of grasps per object
+nG=250; %number of grasps per object
 random_results(1).options=options;
 random_results(1).G=[];
-random_results(1).GW=[];
 random_results(1).T=[];
 random_results(1).q_m=[];
 random_results(1).tq_m=[];
 random_results(1).q_u=[];
 random_results(1).tq_u=[];
+random_results(1).tgws_m=[];
+random_results(1).tgws_u=[];
 random_results(1).fc_m=[];
-random_results(1).GWS_m=[];
+random_results(1).eps_m=[];
 random_results(1).fc_u=[];
-random_results(1).GWS_u=[];
-
+random_results(1).eps_u=[];
+random_results(1).V_m=[];
+random_results(1).V_u=[];
 for i=1:nO
 	obj=YBekiroglu_20150717(i).obj;
 	vn = vertexNormal(triangulation(obj.faces,obj.pts))*(-1); %get the inward-pointing vertex normals
@@ -41,7 +44,7 @@ for i=1:nO
 	grasp_count=0;
 	while (grasp_count < nG)
 		
-		G=randi([1 size(obj.pts,1)],1,3); %generate random grasp on the object
+		G=randi([1 size(obj.pts,1)],1,nF); %generate random grasp on the object
 		T=randn(1,6); T=T./norm(T)*rand(1,1); %random task wrench with length between 0 and 1
 		
 		for k=1:size(G,2)
@@ -76,23 +79,49 @@ for i=1:nO
 		if q_m<1
 			continue;
 		end
-		[fc_m, GWS_m]=graspWrenchSpace(GW,options);
+		W=[GW(1).W; zeros(1,6)];
+		for j=2:nF
+			W=minksum(W,[GW(j).W; zeros(1,6)]);
+		end
+		tic
+		[fc_m, GWS_m]=force_closure_test_QR(W);
+		tgws_m=toc;
+		if fc_m == (-1) %indicates qhull f**kup
+			continue;
+		end
+		eps_m=min(GWS_m.b);
+		V_m=GWS_m.V;
 		
 		options.GWS='union';
 		[q_u tq_u]=graspQuality(GW,T,options);
-		[fc_u, GWS_u]=graspWrenchSpace(GW,options);
-				
+		W=GW(1).W;
+		for j=2:nF
+			W=[W;GW(j).W];
+		end
+		tic
+		[fc_u, GWS_u]=force_closure_test_QR(W);
+		tgws_u=toc;
+		if fc_u == (-1) %indicates qhull f**kup
+			continue;
+		end
+		eps_u=min(GWS_u.b);
+		V_u=GWS_u.V;
+		
 		random_results(i).G{end+1}=G;
 		random_results(i).T{end+1}=T;
-		random_results(i).GW{end+1}=GW;
 		random_results(i).q_m(end+1)=q_m;
 		random_results(i).tq_m(end+1)=tq_m;
 		random_results(i).q_u(end+1)=q_u;
 		random_results(i).tq_u(end+1)=tq_u;
+		random_results(i).eps_m(end+1)=eps_m;
+		random_results(i).eps_u(end+1)=eps_u;
+		random_results(i).V_m(end+1)=V_m;
+		random_results(i).V_u(end+1)=V_u;
+		random_results(i).tgws_m(end+1)=tgws_m;
+		random_results(i).tgws_u(end+1)=tgws_u;
 		random_results(i).fc_m(end+1)=fc_m;
-		random_results(i).GWS_m{end+1}=GWS_m;
 		random_results(i).fc_u(end+1)=fc_u;
-		random_results(i).GWS_u{end+1}=GWS_u;
+		
 		grasp_count=grasp_count+1;
 		disp(['Evaluated object ', num2str(i), ' of ',num2str(nO), '; grasp ', num2str(grasp_count), ' of ', num2str(nG), '.']);
 	end
