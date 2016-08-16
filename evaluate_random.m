@@ -27,6 +27,7 @@ random_results(1).V_m=[];
 random_results(1).V_u=[];
 for i=1:nO
 	obj=YBekiroglu_20150717(i).obj;
+    obj.pts=obj.pts./1000; %convert to m
 	vn = vertexNormal(triangulation(obj.faces,obj.pts))*(-1); %get the inward-pointing vertex normals
 	random_results(i).obj=obj;
 	random_results(i).vn=vn;
@@ -45,7 +46,7 @@ for i=1:nO
 	while (grasp_count < nG)
 		
 		G=randi([1 size(obj.pts,1)],1,nF); %generate random grasp on the object
-		T=randn(1,6); T=T./norm(T)*rand(1,1); %random task wrench with length between 0 and 1
+		T=randn(1,6); T=T./norm(T)*(0.1 + (0.9).*rand(1,1)); %random task wrench with length between 0.1 and 1
 		
 		for k=1:size(G,2)
 			% generate 1-element dummy patch to obtain a boring hf-contact
