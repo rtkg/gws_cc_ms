@@ -36,7 +36,7 @@ for i=1:nO
 end
 %ylabels={'0.0'; '0.5'; '1.0'; '1.5'; '2.0'; '2.5'; '3.0'};
 
-boxplot(data,group, 'positions', positions, 'notch','on','medianstyle','target','symbol','r+','DataLim',[0 10],'ExtremeMode','clip');hold on; grid on;
+boxplot(data,group, 'positions', positions, 'notch','on','medianstyle','target','symbol','r+','DataLim',[0 3],'ExtremeMode','compress');hold on; grid on;
 
 ax=axis;
 plot([0 ax(2)],[1 1],'k','LineWidth',1.5);
