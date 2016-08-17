@@ -36,7 +36,7 @@ for i=1:nO
 end
 %ylabels={'0.0'; '0.5'; '1.0'; '1.5'; '2.0'; '2.5'; '3.0'};
 
-boxplot(data,group, 'positions', positions, 'notch','on','medianstyle','target','symbol','r+','DataLim',[0 3],'ExtremeMode','compress');hold on; grid on;
+boxplot(data,group, 'positions', positions, 'notch','on','medianstyle','target','symbol','r+','DataLim',[0 3],'ExtremeMode','clip');hold on; grid on;
 
 ax=axis;
 plot([0 ax(2)],[1 1],'k','LineWidth',1.5);
@@ -57,7 +57,7 @@ set(gca,'XTickLabel',{' '});
 %set(gca,'YTickLabel',{' '});
 pos=[1.05 1.9 2.8 3.9];
 for i=1:length(xlabels)
-	text(pos(i),-0.6,0,xlabels(i),'Interpreter','Latex','fontsize',font_size);
+	text(pos(i),0,0,xlabels(i),'Interpreter','Latex','fontsize',font_size);
 end
 % for i=1:length(ylabels)
 % 	text(0.65,(i-1)*0.5,0,ylabels(i),'Interpreter','Latex','fontsize',font_size);

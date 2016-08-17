@@ -76,7 +76,7 @@ set(gca,'XTickLabel',{' '});
 set(gca,'YTickLabel',{' '});
 pos=[1.05 1.9 2.8 3.9];
 for i=1:length(xlabels)
-	text(pos(i),-0.35,0,xlabels(i),'Interpreter','Latex','fontsize',font_size);
+	text(pos(i),-0.2,0,xlabels(i),'Interpreter','Latex','fontsize',font_size);
 end
 for i=1:length(ylabels)
 	text(0.65,(i-1)*0.5,0,ylabels(i),'Interpreter','Latex','fontsize',font_size);
@@ -116,14 +116,14 @@ end
 h=legend(flipud(plots(2:3)),' successful grasps',' unsuccessful grasps','Location','NorthWest');
 set(h,'Interpreter','latex','FontSize',font_size);
 ylabel('$q^*$','interpreter','latex','fontsize',font_size);
-
 h = get(gca,'ylabel');
-set(h,'Position',get(h,'Position')+[-0.1 0 0]);
+set(h,'Position',get(h,'Position')+[-0.1 0.8 0]);
+
 set(gca,'XTickLabel',{' '});
 set(gca,'YTickLabel',{' '});
 pos=[1.05 1.9 2.8 3.9];
 for i=1:length(xlabels)
-	text(pos(i),-0.35,0,xlabels(i),'Interpreter','Latex','fontsize',font_size);
+	text(pos(i),-0.2,0,xlabels(i),'Interpreter','Latex','fontsize',font_size);
 end
 for i=1:length(ylabels)
 	text(0.65,(i-1)*0.5,0,ylabels(i),'Interpreter','Latex','fontsize',font_size);
@@ -194,9 +194,8 @@ h = get(gca,'ylabel');
 set(h,'Position',get(h,'Position')+[-0.05 0 0]);
 set(gca,'XTickLabel',{' '});
 set(gca,'YTickLabel',{' '});
-pos=[0.9 1.7 2.5 3.7];
 for i=1:length(xlabels)
-	text(pos(i),-4.5,0,xlabels(i),'Interpreter','Latex','fontsize',font_size);
+	text(pos(i),-8,0,xlabels(i),'Interpreter','Latex','fontsize',font_size);
 end
 for i=1:length(ylabels)
 	text(0.3,(i-1)*20,0,ylabels(i),'Interpreter','Latex','fontsize',font_size);
@@ -222,7 +221,7 @@ set(gca,'XTickLabel',{' '});
 set(gca,'YTickLabel',{' '});
 pos=[0.9 1.7 2.5 3.7];
 for i=1:length(xlabels)
-	text(pos(i),-4.5,0,xlabels(i),'Interpreter','Latex','fontsize',font_size);
+	text(pos(i),-8,0,xlabels(i),'Interpreter','Latex','fontsize',font_size);
 end
 for i=1:length(ylabels)
 	text(0.3,(i-1)*20,0,ylabels(i),'Interpreter','Latex','fontsize',font_size);
