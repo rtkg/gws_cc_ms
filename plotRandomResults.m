@@ -1,4 +1,4 @@
-function plotYBekirogluResults(res)
+function plotRandomResults(res)
 
 nO=length(res);
 sz=[100 100 1000 800];
@@ -47,7 +47,7 @@ for i=1:length(h)
 end
 
 [h,icons,plots,str] = legend('a','b','c');
-h=legend(flipud(plots(2:3)),'Minkowski Sum','Union','Location','NorthWest');
+h=legend(flipud(plots(2:3)),'$L_{\infty}$','$L_1$','Location','NorthWest');
 set(h,'Interpreter','latex','FontSize',font_size);
 ylabel('$q^*$','interpreter','latex','fontsize',font_size);
 
