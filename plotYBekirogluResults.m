@@ -68,10 +68,10 @@ end
 [h,icons,plots,str] = legend('a','b','c');
 h=legend(flipud(plots(2:3)),' successful grasps',' unsuccessful grasps','Location','NorthWest');
 set(h,'Interpreter','latex','FontSize',font_size);
-ylabel('$q^*$','interpreter','latex','fontsize',font_size);
+ylabel('$q^*_{L_{\infty}}$','interpreter','latex','fontsize',font_size);
 
 h = get(gca,'ylabel');
-set(h,'Position',get(h,'Position')+[-0.1 0 0]);
+set(h,'Position',get(h,'Position')+[-0.02 0 0]);
 set(gca,'XTickLabel',{' '});
 set(gca,'YTickLabel',{' '});
 pos=[1.05 1.9 2.8 3.9];
@@ -83,8 +83,6 @@ for i=1:length(ylabels)
 end
 ylim([0 3.25]);
 pbaspect([1.8,1,1]);
-
-
 %%%%%%%%%%%%%%%%%%%%%% Boxplot quality criterion Union %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 f(2)=figure;
 group_u=[];
@@ -101,6 +99,7 @@ for i=1:nO
 	color(2*i-1)='r';
 	color(2*i)='g';
 end
+
 ylabels={'0.0'; '0.5'; '1.0'; '1.5'; '2.0'; '2.5'; '3.0'};
 boxplot(data_u,group_u, 'positions', positions_u, 'notch','on','medianstyle','target','symbol','r+');hold on; grid on;
 
@@ -115,9 +114,9 @@ end
 [h,icons,plots,str] = legend('a','b','c');
 h=legend(flipud(plots(2:3)),' successful grasps',' unsuccessful grasps','Location','NorthWest');
 set(h,'Interpreter','latex','FontSize',font_size);
-ylabel('$q^*$','interpreter','latex','fontsize',font_size);
+ylabel('$q^*_{L_1}$','interpreter','latex','fontsize',font_size);
 h = get(gca,'ylabel');
-set(h,'Position',get(h,'Position')+[-0.1 0.8 0]);
+set(h,'Position',get(h,'Position')+[-0.02 0.8 0]);
 
 set(gca,'XTickLabel',{' '});
 set(gca,'YTickLabel',{' '});
@@ -130,7 +129,7 @@ for i=1:length(ylabels)
 end
 ylim([0 3.25]);
 pbaspect([1.8,1,1]);
-
+disp(['q_m: ', num2str(mean(data_m)),'+/-',num2str(std(data_m)),', q_u: ',num2str(mean(data_u)),'+/-',num2str(std(data_u)), ', (mean diff: ', num2str((mean(data_m)-mean(data_u))/(mean(data_u)/100)),'%).']); fprintf('\n');
 
 %%%%%%%%%%%%%%%%%%%%%% ROC curve  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 f(3)=figure;
@@ -145,6 +144,7 @@ tpr=y(v(1))/100;
 msg=['ROC AUC Minkowski: ',num2str(trapz(x/100,-y/100)), ' success rate Minkowski: ', num2str(tpr/(tpr+0.05))];
 disp(msg);
 plot(x,y,'LineWidth',3); hold on;
+%plot(x(1:10:end),y(1:10:end),'bd'); hold on;
 
 ev=linspace(0,max([max(qs_u) max(qus_u)]),100000);
 clear x; clear y;
@@ -165,6 +165,8 @@ set(h,'Position',get(h,'Position')+[0 -0.05 0]);
 xlabel('false positive rate [ \%]','interpreter','latex','FontSize',font_size);
 h = get(gca,'xlabel');
 set(h,'Position',get(h,'Position')+[-0.05 0 0]);
+h=legend('$L_{\infty}$', '$L_1$', 'Location','NorthEast');
+set(h,'Interpreter','latex','FontSize',font_size);
 
 set(gca,'XTickLabel',{' '});
 set(gca,'YTickLabel',{' '});
@@ -191,7 +193,7 @@ h=legend(' classification accuracy ',' true positive rate',' true negative rate'
 set(h,'Interpreter','latex','FontSize',font_size);
 ylabel('prediction rate [ \%]','interpreter','latex','FontSize',font_size);
 h = get(gca,'ylabel');
-set(h,'Position',get(h,'Position')+[-0.05 0 0]);
+set(h,'Position',get(h,'Position')+[-0.02 0 0]);
 set(gca,'XTickLabel',{' '});
 set(gca,'YTickLabel',{' '});
 for i=1:length(xlabels)
@@ -216,7 +218,7 @@ h=legend(' classification accuracy ',' true positive rate',' true negative rate'
 set(h,'Interpreter','latex','FontSize',font_size);
 ylabel('prediction rate [ \%]','interpreter','latex','FontSize',font_size);
 h = get(gca,'ylabel');
-set(h,'Position',get(h,'Position')+[-0.05 0 0]);
+set(h,'Position',get(h,'Position')+[-0.02 0 0]);
 set(gca,'XTickLabel',{' '});
 set(gca,'YTickLabel',{' '});
 pos=[0.9 1.7 2.5 3.7];

@@ -72,19 +72,23 @@ print(gcf,'grasp_quality_random','-dpdf','-r450');
 q_m=[res(:).q_m];
 q_u=[res(:).q_u];
 fprintf('\n');
-disp(['q_m: ', num2str(mean(q_m)),'+/-',num2str(std(q_m)),', q_u: ',num2str(mean(q_u)),'+/-',num2str(std(q_u)), ', (mean diff: ', num2str(mean(q_u)/mean(q_m)*100),'%).']); fprintf('\n');
+disp(['q_m: ', num2str(mean(q_m)),'+/-',num2str(std(q_m)),', q_u: ',num2str(mean(q_u)),'+/-',num2str(std(q_u)), ', (mean diff: ', num2str((mean(q_m)-mean(q_u))/(mean(q_u)/100)),'%).']); fprintf('\n');
+
+tp_u=find(q_u >= 1);
+tpr_u=length(tp_u)/length(q_u)*100;
+disp(['True positive rate union: ', num2str(tpr_u), '%.']); fprintf('\n');
 
 tq_m=[res(:).tq_m];
 tq_u=[res(:).tq_u];
-disp(['tq_m: ', num2str(mean(tq_m)),'+/-',num2str(std(tq_m)),', tq_u: ',num2str(mean(tq_u)),'+/-',num2str(std(tq_u)), ', (mean diff: ', num2str(mean(tq_u)/mean(tq_m)*100),'%).']); fprintf('\n');
+disp(['tq_m: ', num2str(mean(tq_m)),'+/-',num2str(std(tq_m)),', tq_u: ',num2str(mean(tq_u)),'+/-',num2str(std(tq_u)), ', (mean diff: ', num2str((mean(tq_m)-mean(tq_u))/(mean(tq_u)/100)),'%).']); fprintf('\n');
 
 tgws_m=[res(:).tgws_m];
 tgws_u=[res(:).tgws_u];
-disp(['tgws_m: ', num2str(mean(tgws_m)),'+/-',num2str(std(tgws_m)),', tgws_u: ',num2str(mean(tgws_u)),'+/-',num2str(std(tgws_u)), ', (mean diff: ', num2str(mean(tgws_u)/mean(tgws_m)*100),'%).']); fprintf('\n');
+disp(['tgws_m: ', num2str(mean(tgws_m)),'+/-',num2str(std(tgws_m)),', tgws_u: ',num2str(mean(tgws_u)),'+/-',num2str(std(tgws_u)), ', (mean factor: ', num2str(mean(tgws_m)/mean(tgws_u)),'.']); fprintf('\n');
 
 V_m=[res(:).V_m];
 V_u=[res(:).V_u];
-disp(['V_m: ', num2str(mean(V_m)),'+/-',num2str(std(V_m)),', V_u: ',num2str(mean(V_u)),'+/-',num2str(std(V_u)), ', (mean diff: ', num2str(mean(V_u)/mean(V_m)*100),'%).']); fprintf('\n');
+disp(['V_m: ', num2str(mean(V_m)),'+/-',num2str(std(V_m)),', V_u: ',num2str(mean(V_u)),'+/-',num2str(std(V_u)), ', (mean factor: ', num2str(mean(V_m)/mean(V_u)),'.']); fprintf('\n');
 
 fc_m=[res(:).fc_m];
 fc_u=[res(:).fc_u];
@@ -93,5 +97,5 @@ disp([num2str(length(fc)), ' of ', num2str(length(fc_u)), ' grasps are force clo
 
 eps_m=[res(:).eps_m]; eps_m=eps_m(fc);
 eps_u=[res(:).eps_u]; eps_u=eps_u(fc);
-disp(['eps_m: ', num2str(mean(eps_m)),'+/-',num2str(std(eps_m)),', eps_u: ',num2str(mean(eps_u)),'+/-',num2str(std(eps_u)), ', (mean diff: ', num2str(mean(eps_u)/mean(eps_m)*100),'%).']); fprintf('\n');
+disp(['eps_m: ', num2str(mean(eps_m)),'+/-',num2str(std(eps_m)),', eps_u: ',num2str(mean(eps_u)),'+/-',num2str(std(eps_u)), ', (mean diff: ', num2str((mean(eps_m)-mean(eps_u))/(mean(eps_u)/100)),'%).']); fprintf('\n');
 
